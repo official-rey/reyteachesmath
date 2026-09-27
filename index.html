@@ -182,7 +182,6 @@ html.opening-skip .page { animation: page-in .35s ease-in-out both; }
 .btn:hover { background: #33312D; }
 .btn:active { background: #000; }
 .btn .soft { font-weight: 400; opacity: .82; }
-.micro { margin-top: 10px; font-size: 15px; color: var(--muted); }
 
 /* Sections */
 .sec { padding: 52px 0 60px; border-top: 1px solid var(--hair); }
@@ -230,7 +229,7 @@ html.opening-skip .page { animation: page-in .35s ease-in-out both; }
 /* How booking works */
 .steps { counter-reset: step; margin-bottom: 28px; }
 .steps li { display: grid; grid-template-columns: 46px 1fr; align-items: start; padding: 16px 0; counter-increment: step; }
-.steps li::before { content: counter(step); grid-row: span 2; font: italic 400 46px/.9 var(--serif); }
+.steps li::before { content: counter(step); font: italic 400 46px/.9 var(--serif); }
 
 /* About */
 .lede { max-width: 30em; margin-bottom: 8px; font-size: 18px; }
@@ -251,8 +250,6 @@ html.opening-skip .page { animation: page-in .35s ease-in-out both; }
 
 /* Footer */
 .foot { padding: 44px 0 36px; border-top: 1px solid var(--hair); font-size: 15px; color: var(--muted); }
-.foot .curve { width: 120px; height: auto; fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
-.foot .sign { margin: 16px 0 14px; font: italic 400 34px/1.1 var(--serif); color: var(--ink); }
 .foot p + p { margin-top: 4px; }
 .foot a { color: var(--ink); }
 
@@ -418,9 +415,8 @@ html.sheet-open { overflow: hidden; }
     </svg>
     <p class="tagline">Affordable student tutorial service for the price of a meal and a coffee.</p>
     <p class="price"><span class="peso">₱</span>120<span class="per">/hr</span></p>
-    <p class="price-note">Solo or group · face to face on campus</p>
+    <p class="price-note">Solo or group · face to face</p>
     <a class="btn" id="hero-cta" href="https://m.me/reyblunder.31415" data-book>Book a session</a>
-    <p class="micro">Dali ra: under a minute, on Messenger.</p>
   </div>
 </header>
 
@@ -469,11 +465,15 @@ html.sheet-open { overflow: hidden; }
       <li><span class="name">Linear Algebra</span></li>
       <li><span class="name">Abstract Algebra</span></li>
       <li><span class="name">Statistics</span></li>
+      <li><span class="name">Discrete Math</span></li>
+      <li><span class="name">Number Theory</span></li>
+      <li><span class="name">Graph Theory</span></li>
+      <li><span class="name">Differential Equations</span></li>
     </ul>
     <div class="formats">
       <div>
         <h3>Solo</h3>
-        <p>One-on-one, just you and me, face to face on campus.</p>
+        <p>One-on-one, face to face.</p>
       </div>
       <div>
         <h3>Group</h3>
@@ -501,11 +501,11 @@ html.sheet-open { overflow: hidden; }
 <section class="sec" aria-labelledby="h-booking">
   <div class="wrap">
     <p class="label"><span class="no">04</span> Booking</p>
-    <h2 id="h-booking">Book in under a <em>minute</em></h2>
+    <h2 id="h-booking">How to <em>book</em></h2>
     <ol class="rule-list steps">
-      <li><h3>Pick</h3><p>Choose a subject, solo or group, and a day and time.</p></li>
-      <li><h3>Tap</h3><p>Tap “Book on Messenger.” Your message is copied for you.</p></li>
-      <li><h3>Paste</h3><p>Paste it in the chat with Rey Saliot. I’ll confirm the time and the spot on campus.</p></li>
+      <li><p>Choose a subject, solo or group, and a day and time.</p></li>
+      <li><p>Tap “Book on Messenger.” The page copies your message.</p></li>
+      <li><p>Paste it in the chat with Rey Saliot. I reply to confirm the time and place.</p></li>
     </ol>
     <a class="btn" href="https://m.me/reyblunder.31415" data-book>Book a session</a>
   </div>
@@ -544,11 +544,11 @@ html.sheet-open { overflow: hidden; }
     <h2 id="h-faq">Quick <em>questions</em></h2>
     <dl class="faq">
       <dt>Where do we meet?</dt>
-      <dd>Face to face on campus at CMU. We’ll agree on the exact spot in the chat.</dd>
+      <dd>Anywhere you suggest: a cafe, a study area, a campus classroom, or your own place. Sessions at your place add a transport fee.</dd>
       <dt>What’s the group rate?</dt>
       <dd>Group rate: message me. Solo is ₱120/hr.</dd>
-      <dt>What should I bring?</dt>
-      <dd>Your notes, the topics your midterm covers, and the problems you’re stuck on. Bring a calculator for Statistics. I’ll bring the review materials and practice sets.</dd>
+      <dt>What should I prepare?</dt>
+      <dd>Your syllabus, the materials your instructor gave, your references, and past quizzes or exams.</dd>
     </dl>
   </div>
 </section>
@@ -557,8 +557,6 @@ html.sheet-open { overflow: hidden; }
 
 <footer class="foot">
   <div class="wrap">
-    <svg class="curve" viewBox="0 0 120 16" aria-hidden="true"><path d="M0 8C6.7 5.4 13.3 3 20 3C26.7 3 33.3 5.4 40 8C46.7 10.6 53.3 13 60 13C66.7 13 73.3 10.6 80 8C86.7 5.4 93.3 3 100 3C106.7 3 113.3 5.4 120 8"/></svg>
-    <p class="sign">Kita-kits sa campus!</p>
     <p>Kuya Rey · Rey Saliot · BS Mathematics, Central Mindanao University</p>
     <p>Messenger: <a href="https://m.me/reyblunder.31415">Rey Saliot</a></p>
   </div>
@@ -577,7 +575,6 @@ html.sheet-open { overflow: hidden; }
     <div class="sheet-head">
       <div>
         <h2 id="book-title">Book a session</h2>
-        <p>Pick three things. Dali ra.</p>
       </div>
       <button type="button" class="close" id="book-close" aria-label="Close">×</button>
     </div>
@@ -592,6 +589,10 @@ html.sheet-open { overflow: hidden; }
           <label class="chip"><input type="radio" name="subject" value="Linear Algebra"><span>Linear Algebra</span></label>
           <label class="chip"><input type="radio" name="subject" value="Abstract Algebra"><span>Abstract Algebra</span></label>
           <label class="chip"><input type="radio" name="subject" value="Statistics"><span>Statistics</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Discrete Math"><span>Discrete Math</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Number Theory"><span>Number Theory</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Graph Theory"><span>Graph Theory</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Differential Equations"><span>Differential Equations</span></label>
         </div>
       </fieldset>
       <fieldset id="f-format">
