@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kuya Rey · Math tutorials at CMU · ₱120/hr</title>
+<meta name="description" content="Affordable student tutorial service for the price of a meal and a coffee. MMW, Calculus 1 and 2, Integration, Linear Algebra, Abstract Algebra, Statistics. ₱120/hr, face to face at CMU. Book on Messenger.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://official-rey.github.io/reyteachesmath/">
+<meta property="og:title" content="Midterms na? Kaya ra. · Kuya Rey, math tutorials at CMU">
+<meta property="og:description" content="Affordable student tutorial service for the price of a meal and a coffee. ₱120/hr. Book on Messenger.">
+<meta name="theme-color" content="#F3EFE6" id="theme">
+<meta name="color-scheme" content="only light">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Instrument+Serif:ital@0;1&display=swap">
+<script>
+/* Decide before first paint whether the intro plays: once per visit, never under reduced motion. */
+(function (d) {
+  var play = true;
+  try {
+    if (sessionStorage.getItem('kr-intro')) play = false;
+    else sessionStorage.setItem('kr-intro', '1');
+  } catch (e) {}
+  try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) play = false; } catch (e) {}
+  if (!play) return;
+  d.classList.add('opening');
+  var theme = document.getElementById('theme');
+  theme.content = '#141312';
+  window.endIntro = function () {
+    d.classList.remove('opening', 'opening-skip');
+    theme.content = '#F3EFE6';
+  };
+  setTimeout(window.endIntro, 12000);
+})(document.documentElement);
+</script>
+<style>
+:root {
+  --paper: #F3EFE6;
+  --ink: #1D1C1A;
+  --night: #141312;
+  --accent: #C8643B;
+  --muted: #6B675F;
+  --hair: #D9D3C7;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --g: 20px;
+  color-scheme: only light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  padding-bottom: 104px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 17px/1.55 var(--sans);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3 { margin: 0; font-weight: 400; }
+p { margin: 0; }
+b, strong { font-weight: 600; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+svg { display: block; }
+.wrap { padding: 0 var(--g); }
+.peso { font-family: var(--sans); font-style: normal; }
+
+/* Intro: three motions, then a cross-fade into the hero */
+.intro { display: none; }
+html.opening { overflow: hidden; }
+html.opening .intro {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  background: var(--paper);
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  animation: intro-out .5s ease-in-out 4s forwards;
+}
+html.opening .page { animation: page-in .5s ease-in-out 4s both; }
+html.opening-skip .intro { animation: intro-out .35s ease-in-out forwards; }
+html.opening-skip .page { animation: page-in .35s ease-in-out both; }
+@keyframes intro-out { to { opacity: 0; visibility: hidden; } }
+@keyframes page-in { from { opacity: 0; } }
+.intro-sweep {
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 300%;
+  background: linear-gradient(90deg, var(--paper) 0 35%, #FFFBF3 44%, var(--night) 56%);
+  transform: translateX(-66.667%);
+  animation: sweep 1.2s ease-in-out forwards;
+}
+@keyframes sweep { to { transform: translateX(0); } }
+.intro-body {
+  position: absolute;
+  left: var(--g); right: var(--g); top: 50%;
+  transform: translateY(-58%);
+  font: 400 clamp(40px, 12vw, 92px)/1.06 var(--serif);
+}
+.intro-line { max-width: 11em; }
+.intro-line em { font-style: italic; color: var(--accent); white-space: nowrap; }
+.intro-line span {
+  opacity: 0;
+  animation: word .6s ease-in-out forwards;
+  animation-delay: calc(1s + var(--i) * .15s);
+}
+@keyframes word { to { opacity: 1; } }
+.intro-curve { width: 6.6em; height: auto; margin-top: .3em; overflow: visible; }
+.intro-curve path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 332;
+  stroke-dashoffset: 332;
+  animation: draw 1.2s ease-in-out 2.8s forwards;
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.intro-skip {
+  position: absolute;
+  right: max(6px, env(safe-area-inset-right));
+  bottom: max(6px, env(safe-area-inset-bottom));
+  min-width: 64px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 0;
+  background: none;
+  color: #fff;
+  mix-blend-mode: difference;
+  font: 600 14px/1 var(--sans);
+  letter-spacing: .06em;
+  cursor: pointer;
+}
+
+/* Hero */
+.hero { padding: 26px 0 48px; }
+.kicker {
+  margin-bottom: 30px;
+  font: 600 12px/1.4 var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.headline {
+  font: 400 clamp(56px, 19vw, 156px)/.9 var(--serif);
+  letter-spacing: -.012em;
+}
+.headline em { display: block; font-style: italic; color: var(--accent); }
+.plot { width: 212px; height: auto; margin: 22px 0 24px; overflow: visible; }
+.plot .axis { stroke: var(--hair); stroke-width: 1; }
+.plot .curve { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
+.tagline { max-width: 21em; margin-bottom: 26px; font-size: 19px; line-height: 1.45; }
+.price { font: 400 68px/1 var(--serif); letter-spacing: -.01em; }
+.price .peso { font-size: .54em; margin-right: .08em; }
+.price .per { font-size: .44em; color: var(--muted); }
+.price-note { margin: 8px 0 24px; font-size: 15px; color: var(--muted); }
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  width: 100%;
+  min-height: 56px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 17px/1.2 var(--sans);
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .15s ease-in-out;
+}
+.btn:hover { background: #33312D; }
+.btn:active { background: #000; }
+.btn .soft { font-weight: 400; opacity: .82; }
+.micro { margin-top: 10px; font-size: 15px; color: var(--muted); }
+
+/* Sections */
+.sec { padding: 52px 0 60px; border-top: 1px solid var(--hair); }
+.label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  font: 600 12px/1.4 var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.label .no { font: italic 400 19px/1 var(--serif); letter-spacing: 0; color: var(--ink); }
+.label svg { height: 22px; width: auto; margin-left: 2px; fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.sec h2 { margin-bottom: 26px; font: 400 46px/1 var(--serif); letter-spacing: -.006em; }
+.sec h2 em { font-style: italic; }
+.note { font-size: 15px; color: var(--muted); }
+.rule-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--hair); }
+.rule-list > li { border-bottom: 1px solid var(--hair); }
+
+/* Reviews */
+.stats { margin: 0; border-top: 1px solid var(--hair); }
+.stats div { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--hair); }
+.stats dd { order: -1; min-width: 2.9em; margin: 0; font: 400 46px/1 var(--serif); }
+.stats dd small { font: 400 14px/1 var(--sans); color: var(--muted); }
+.stats dt { font-size: 17px; line-height: 1.3; }
+.stats + .note { margin-top: 12px; }
+.quotes { display: grid; gap: 34px; margin-top: 44px; }
+.quote { margin: 0; }
+.quote blockquote { margin: 0; font: 400 26px/1.22 var(--serif); }
+.quote figcaption { margin-top: 10px; font-size: 15px; color: var(--muted); }
+
+/* Subjects */
+.subjects li { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; padding: 13px 0 12px; }
+.subjects .name { font: 400 31px/1.1 var(--serif); }
+.subjects .full { font-size: 15px; color: var(--muted); }
+.formats { display: grid; gap: 22px; margin-top: 36px; }
+.formats h3, .steps h3 { margin-bottom: 3px; font: 600 17px/1.35 var(--sans); }
+
+/* Every session includes */
+.includes li { position: relative; padding: 13px 0 13px 30px; font-size: 18px; }
+.includes li::before { content: ""; position: absolute; left: 0; top: 1.45em; width: 16px; height: 1px; background: var(--ink); }
+
+/* How booking works */
+.steps { counter-reset: step; margin-bottom: 28px; }
+.steps li { display: grid; grid-template-columns: 46px 1fr; align-items: start; padding: 16px 0; counter-increment: step; }
+.steps li::before { content: counter(step); grid-row: span 2; font: italic 400 46px/.9 var(--serif); }
+
+/* About */
+.lede { max-width: 30em; margin-bottom: 8px; font-size: 18px; }
+.creds h3 {
+  margin: 30px 0 8px;
+  font: 600 12px/1.4 var(--sans);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.creds li { padding: 12px 0; }
+
+/* FAQ */
+.faq { margin: 0; }
+.faq dt { margin: 28px 0 6px; font: 400 27px/1.15 var(--serif); }
+.faq dt:first-child { margin-top: 0; }
+.faq dd { margin: 0; max-width: 32em; }
+
+/* Footer */
+.foot { padding: 44px 0 36px; border-top: 1px solid var(--hair); font-size: 15px; color: var(--muted); }
+.foot .curve { width: 120px; height: auto; fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
+.foot .sign { margin: 16px 0 14px; font: italic 400 34px/1.1 var(--serif); color: var(--ink); }
+.foot p + p { margin-top: 4px; }
+.foot a { color: var(--ink); }
+
+/* Pinned booking button */
+.dock {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 20;
+  padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+  background: var(--paper);
+  border-top: 1px solid var(--hair);
+  transform: translateY(110%);
+  visibility: hidden;
+  transition: transform .3s ease-in-out, visibility 0s linear .3s;
+}
+.dock.show { transform: none; visibility: visible; transition: transform .3s ease-in-out, visibility 0s; }
+html.sheet-open .dock { visibility: hidden; }
+html.sheet-open { overflow: hidden; }
+
+/* Booking panel */
+.sheet {
+  --g: 20px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 94vh;
+  max-height: 94dvh;
+  margin: auto auto 0;
+  padding: 0;
+  border: 0;
+  border-radius: 12px 12px 0 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+.sheet[open] { display: flex; flex-direction: column; animation: rise .28s ease-out; }
+.sheet::backdrop { background: rgba(20, 19, 18, .62); }
+@keyframes rise { from { opacity: 0; transform: translateY(28px); } }
+.sheet form { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 6px 10px var(--g); border-bottom: 1px solid var(--hair); }
+.sheet-head h2 { font: 400 30px/1.1 var(--serif); }
+.sheet-head p { font-size: 14px; color: var(--muted); }
+.close {
+  width: 48px; height: 48px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: 400 30px/1 var(--sans);
+  cursor: pointer;
+}
+.sheet-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 4px var(--g) 18px; }
+.sheet fieldset { min-width: 0; margin: 0; padding: 20px 0 2px; border: 0; }
+.sheet fieldset:first-child { padding-top: 14px; }
+.sheet legend { float: left; width: 100%; display: flex; align-items: baseline; gap: 8px; padding: 0; margin-bottom: 10px; font: 600 15px/1.3 var(--sans); }
+.sheet legend + * { clear: both; }
+.sheet legend .no { font: italic 400 21px/1 var(--serif); color: var(--muted); }
+.sheet fieldset.need legend { box-shadow: inset 0 -2px 0 var(--accent); }
+.sub { margin: 12px 0 8px; font-size: 14px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips.c2, .chips.c3, .chips.c4, .chips.c6 { display: grid; }
+.chips.c2 { grid-template-columns: repeat(2, 1fr); }
+.chips.c3 { grid-template-columns: repeat(3, 1fr); }
+.chips.c4 { grid-template-columns: repeat(4, 1fr); }
+.chips.c6 { grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.chip { position: relative; display: block; }
+.chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.chip span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  font-size: 15px;
+  line-height: 1.2;
+  text-align: center;
+  transition: background-color .15s ease-in-out, color .15s ease-in-out;
+}
+.chips.c6 span, .chips.c4 span { padding: 0 4px; }
+.chip input:checked + span { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.chip input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.sheet-foot { padding: 12px var(--g) max(14px, env(safe-area-inset-bottom)); border-top: 1px solid var(--hair); }
+.summary { margin-bottom: 10px; font-size: 15px; color: var(--muted); }
+.summary.ready { color: var(--ink); }
+.status { margin-top: 10px; font-size: 15px; font-weight: 600; }
+.status:empty { display: none; }
+.fallback { margin-top: 8px; }
+.fallback[hidden] { display: none; }
+.fallback textarea {
+  display: block;
+  width: 100%;
+  min-height: 118px;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  background: #FBF9F4;
+  color: var(--ink);
+  font: 400 16px/1.45 var(--sans);
+  resize: vertical;
+}
+
+@media (min-width: 640px) {
+  .sheet { --g: 28px; margin: auto; border-radius: 6px; max-height: min(92vh, 860px); }
+  .btn.fit { width: auto; min-width: 280px; }
+}
+
+@media (min-width: 880px) {
+  :root { --g: 56px; }
+  body { font-size: 18px; }
+  .wrap {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 660px);
+    column-gap: 64px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .wrap > * { grid-column: 2; }
+  .wrap > .label { grid-column: 1; grid-row: 1 / span 20; align-self: start; position: sticky; top: 36px; margin-top: 16px; }
+  .sec { padding: 96px 0 104px; }
+  .sec h2 { font-size: 68px; margin-bottom: 36px; }
+  .hero { padding: 40px 0 104px; }
+  .hero .wrap > .kicker { grid-column: 1 / -1; margin-bottom: 44px; }
+  .hero .wrap > .headline { grid-column: 1 / -1; }
+  .plot { width: 300px; margin: 26px 0 28px; }
+  .tagline { font-size: 22px; }
+  .price { font-size: 84px; }
+  .hero .btn, .steps + .btn, .dock .btn { width: auto; min-width: 300px; justify-self: start; }
+  .quotes { gap: 44px; }
+  .quote blockquote { font-size: 32px; }
+  .includes { columns: 2; column-gap: 40px; border-top: 0; }
+  .includes li { break-inside: avoid; border-top: 1px solid var(--hair); border-bottom: 0; }
+  .formats { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .foot .wrap > * { grid-column: 2; }
+  .intro-body { left: max(var(--g), calc((100vw - 1120px) / 2 + var(--g))); }
+  .intro-curve path { stroke-width: 1.1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro">
+  <div class="intro-sweep" aria-hidden="true"></div>
+  <div class="intro-body" aria-hidden="true">
+    <p class="intro-line"><span style="--i:0">for</span> <span style="--i:1">the</span> <span style="--i:2">price</span> <span style="--i:3">of</span> <span style="--i:4">a</span> <em><span style="--i:5">meal</span> <span style="--i:6">and</span> <span style="--i:7">a</span> <span style="--i:8">coffee.</span></em></p>
+    <svg class="intro-curve" viewBox="0 0 320 24" aria-hidden="true"><path d="M0 12C13.3 7.8 26.7 4 40 4C53.3 4 66.7 7.8 80 12C93.3 16.2 106.7 20 120 20C133.3 20 146.7 16.2 160 12C173.3 7.8 186.7 4 200 4C213.3 4 226.7 7.8 240 12C253.3 16.2 266.7 20 280 20C293.3 20 306.7 16.2 320 12"/></svg>
+  </div>
+  <button type="button" class="intro-skip" aria-label="Skip intro">Skip</button>
+</div>
+
+<div class="page">
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Kuya Rey · Math tutorials at CMU</p>
+    <h1 class="headline">Midterms na? <em>Kaya ra.</em></h1>
+    <svg class="plot" viewBox="0 0 320 34" aria-hidden="true">
+      <path class="axis" d="M0 17H320M40 13v8M80 13v8M120 13v8M160 13v8M200 13v8M240 13v8M280 13v8"/>
+      <path class="curve" d="M0 17C13.3 12 26.7 7 40 7C53.3 7 66.7 12 80 17C93.3 22 106.7 27 120 27C133.3 27 146.7 22 160 17C173.3 12 186.7 7 200 7C213.3 7 226.7 12 240 17C253.3 22 266.7 27 280 27C293.3 27 306.7 22 320 17"/>
+    </svg>
+    <p class="tagline">Affordable student tutorial service for the price of a meal and a coffee.</p>
+    <p class="price"><span class="peso">₱</span>120<span class="per">/hr</span></p>
+    <p class="price-note">Solo or group · face to face on campus</p>
+    <a class="btn" id="hero-cta" href="https://m.me/reyblunder.31415" data-book>Book a session</a>
+    <p class="micro">Dali ra: under a minute, on Messenger.</p>
+  </div>
+</header>
+
+<main>
+
+<section class="sec" aria-labelledby="h-reviews">
+  <div class="wrap">
+    <p class="label"><span class="no">01</span> Reviews</p>
+    <h2 id="h-reviews">What students <em>say</em></h2>
+    <dl class="stats">
+      <div><dt>Would recommend</dt><dd>4.8 <small>/ 5</small></dd></div>
+      <div><dt>Clarity</dt><dd>4.6 <small>/ 5</small></dd></div>
+      <div><dt>Comfortable asking questions</dt><dd>4.6 <small>/ 5</small></dd></div>
+    </dl>
+    <p class="note">Averages from an anonymous feedback form · 5 student responses</p>
+    <div class="quotes">
+      <figure class="quote">
+        <blockquote>“Kuya Rey’s teaching style … was so entertaining and it made us comfortable to ask any questions to him without any hesitation.”</blockquote>
+        <figcaption>— Anonymous student.</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>“i like the way he makes every topic easy, and his teaching style is fun, makasabay sabay lang namo.”</blockquote>
+        <figcaption>— Anonymous student.</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>“What I enjoy the most is making the lesson interactive by giving us activities (e.g. ipa answer sa board) in between the lessons.”</blockquote>
+        <figcaption>— Anonymous student.</figcaption>
+      </figure>
+      <figure class="quote">
+        <blockquote>“The way he lets us be comfortable in his presence.”</blockquote>
+        <figcaption>— Anonymous student.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-subjects">
+  <div class="wrap">
+    <p class="label"><span class="no">02</span> Subjects <svg viewBox="0 0 16 32" aria-hidden="true"><path d="M12.5 3.5C10 2 7.6 3 7.4 6.6L6.6 25.4C6.4 29 4 30 1.5 28.5"/></svg></p>
+    <h2 id="h-subjects">What we can <em>review</em></h2>
+    <ul class="rule-list subjects">
+      <li><span class="name">MMW</span> <span class="full">Mathematics in the Modern World</span></li>
+      <li><span class="name">Calculus 1</span></li>
+      <li><span class="name">Calculus 2</span></li>
+      <li><span class="name">Integration</span></li>
+      <li><span class="name">Linear Algebra</span></li>
+      <li><span class="name">Abstract Algebra</span></li>
+      <li><span class="name">Statistics</span></li>
+    </ul>
+    <div class="formats">
+      <div>
+        <h3>Solo</h3>
+        <p>One-on-one, just you and me, face to face on campus.</p>
+      </div>
+      <div>
+        <h3>Group</h3>
+        <p>A small group discussion with your friends.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-includes">
+  <div class="wrap">
+    <p class="label"><span class="no">03</span> Included <svg viewBox="0 0 22 26" aria-hidden="true"><path d="M19 3.5H3.5L12 13L3.5 22.5H19"/></svg></p>
+    <h2 id="h-includes">Every session <em>includes</em></h2>
+    <ul class="rule-list includes">
+      <li>Curated review materials</li>
+      <li>Practice exercises</li>
+      <li>Practice exams</li>
+      <li>Mock tests</li>
+      <li>In-person discussion</li>
+      <li>An assessment of where you stand</li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-booking">
+  <div class="wrap">
+    <p class="label"><span class="no">04</span> Booking</p>
+    <h2 id="h-booking">Book in under a <em>minute</em></h2>
+    <ol class="rule-list steps">
+      <li><h3>Pick</h3><p>Choose a subject, solo or group, and a day and time.</p></li>
+      <li><h3>Tap</h3><p>Tap “Book on Messenger.” Your message is copied for you.</p></li>
+      <li><h3>Paste</h3><p>Paste it in the chat with Rey Saliot. I’ll confirm the time and the spot on campus.</p></li>
+    </ol>
+    <a class="btn" href="https://m.me/reyblunder.31415" data-book>Book a session</a>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-about">
+  <div class="wrap">
+    <p class="label"><span class="no">05</span> About</p>
+    <h2 id="h-about">Hi, I’m <em>Kuya Rey.</em></h2>
+    <p class="lede">Rey Saliot on Messenger. 4th-year BS Mathematics student at Central Mindanao University, Musuan.</p>
+    <div class="creds">
+      <h3>Honors</h3>
+      <ul class="rule-list">
+        <li>DOST-SEI scholar and university scholar</li>
+        <li>Consistent Honor Student, A.Y. 2024–2025 and 2025–2026</li>
+      </ul>
+      <h3>Leadership and teaching</h3>
+      <ul class="rule-list">
+        <li>Chairperson, CMU Mathematics Society, A.Y. 2024–2025</li>
+        <li>Founder and first president, CMU Chess Club, A.Y. 2025–2026</li>
+        <li>Designed the Mathinabangay peer-tutoring curriculum and its original problem sheets</li>
+      </ul>
+      <h3>Competitions</h3>
+      <ul class="rule-list">
+        <li>CMU Statistics Wizard: Champion (2023). Regional Statistics Championship: 1st Runner-Up</li>
+        <li>MathCount (NBS College, QC): 5th Place National Finalist</li>
+        <li>Quiz bowl champion: Lamdag University-Wide, CADS, Mathematics Day, CAS</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="h-faq">
+  <div class="wrap">
+    <p class="label"><span class="no">06</span> FAQ</p>
+    <h2 id="h-faq">Quick <em>questions</em></h2>
+    <dl class="faq">
+      <dt>Where do we meet?</dt>
+      <dd>Face to face on campus at CMU. We’ll agree on the exact spot in the chat.</dd>
+      <dt>What’s the group rate?</dt>
+      <dd>Group rate: message me. Solo is ₱120/hr.</dd>
+      <dt>What should I bring?</dt>
+      <dd>Your notes, the topics your midterm covers, and the problems you’re stuck on. Bring a calculator for Statistics. I’ll bring the review materials and practice sets.</dd>
+    </dl>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <svg class="curve" viewBox="0 0 120 16" aria-hidden="true"><path d="M0 8C6.7 5.4 13.3 3 20 3C26.7 3 33.3 5.4 40 8C46.7 10.6 53.3 13 60 13C66.7 13 73.3 10.6 80 8C86.7 5.4 93.3 3 100 3C106.7 3 113.3 5.4 120 8"/></svg>
+    <p class="sign">Kita-kits sa campus!</p>
+    <p>Kuya Rey · Rey Saliot · BS Mathematics, Central Mindanao University</p>
+    <p>Messenger: <a href="https://m.me/reyblunder.31415">Rey Saliot</a></p>
+  </div>
+</footer>
+
+</div>
+
+<div class="dock" id="dock">
+  <div class="wrap">
+    <a class="btn" href="https://m.me/reyblunder.31415" data-book>Book a session <span class="soft">· <span class="peso">₱</span>120/hr</span></a>
+  </div>
+</div>
+
+<dialog class="sheet" id="book" aria-labelledby="book-title">
+  <form id="book-form" novalidate>
+    <div class="sheet-head">
+      <div>
+        <h2 id="book-title">Book a session</h2>
+        <p>Pick three things. Dali ra.</p>
+      </div>
+      <button type="button" class="close" id="book-close" aria-label="Close">×</button>
+    </div>
+    <div class="sheet-body">
+      <fieldset id="f-subject">
+        <legend><span class="no">1</span> Subject</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="subject" value="MMW"><span>MMW</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Calculus 1"><span>Calculus 1</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Calculus 2"><span>Calculus 2</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Integration"><span>Integration</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Linear Algebra"><span>Linear Algebra</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Abstract Algebra"><span>Abstract Algebra</span></label>
+          <label class="chip"><input type="radio" name="subject" value="Statistics"><span>Statistics</span></label>
+        </div>
+      </fieldset>
+      <fieldset id="f-format">
+        <legend><span class="no">2</span> Solo or group</legend>
+        <div class="chips c2">
+          <label class="chip"><input type="radio" name="format" value="solo"><span>Solo</span></label>
+          <label class="chip"><input type="radio" name="format" value="group"><span>Group</span></label>
+        </div>
+        <div id="size-row" hidden>
+          <p class="sub" id="size-label">Group size, including you</p>
+          <div class="chips c4" role="radiogroup" aria-labelledby="size-label">
+            <label class="chip"><input type="radio" name="size" value="2"><span>2</span></label>
+            <label class="chip"><input type="radio" name="size" value="3"><span>3</span></label>
+            <label class="chip"><input type="radio" name="size" value="4"><span>4</span></label>
+            <label class="chip"><input type="radio" name="size" value="5"><span>5</span></label>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset id="f-when">
+        <legend><span class="no">3</span> Preferred day and time</legend>
+        <div class="chips c6" role="radiogroup" aria-label="Day">
+          <label class="chip"><input type="radio" name="day" value="Monday"><span>Mon</span></label>
+          <label class="chip"><input type="radio" name="day" value="Tuesday"><span>Tue</span></label>
+          <label class="chip"><input type="radio" name="day" value="Wednesday"><span>Wed</span></label>
+          <label class="chip"><input type="radio" name="day" value="Thursday"><span>Thu</span></label>
+          <label class="chip"><input type="radio" name="day" value="Friday"><span>Fri</span></label>
+          <label class="chip"><input type="radio" name="day" value="Saturday"><span>Sat</span></label>
+        </div>
+        <div class="chips c3" role="radiogroup" aria-label="Time" style="margin-top:8px">
+          <label class="chip"><input type="radio" name="time" value="morning"><span>Morning</span></label>
+          <label class="chip"><input type="radio" name="time" value="afternoon"><span>Afternoon</span></label>
+          <label class="chip"><input type="radio" name="time" value="evening"><span>Evening</span></label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="sheet-foot">
+      <p class="summary" id="summary">Pick all three, then book.</p>
+      <a class="btn" id="send" href="https://m.me/reyblunder.31415" target="_blank" rel="noopener">Book on Messenger</a>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <div class="fallback" id="fallback" hidden>
+        <label for="msgbox" class="note">Copy this message, then paste it in the chat with Rey Saliot:</label>
+        <textarea id="msgbox" readonly rows="5"></textarea>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  var d = document.documentElement;
+  var LINK = 'https://m.me/reyblunder.31415';
+
+  /* Intro: tap anywhere, Skip, or Escape ends it early. */
+  var intro = document.getElementById('intro');
+  function skipIntro() {
+    if (!d.classList.contains('opening') || d.classList.contains('opening-skip')) return;
+    d.classList.add('opening-skip');
+  }
+  intro.addEventListener('click', skipIntro);
+  intro.addEventListener('animationend', function (e) {
+    if (e.target === intro && window.endIntro) window.endIntro();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') skipIntro(); });
+
+  /* Pin the booking button once the hero button scrolls away. */
+  var dock = document.getElementById('dock');
+  var cta = document.getElementById('hero-cta');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      var e = entries[entries.length - 1];
+      dock.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0);
+    }).observe(cta);
+  } else {
+    dock.classList.add('show');
+  }
+
+  /* Booking panel */
+  var dlg = document.getElementById('book');
+  var form = document.getElementById('book-form');
+  var sizeRow = document.getElementById('size-row');
+  var summary = document.getElementById('summary');
+  var send = document.getElementById('send');
+  var status = document.getElementById('status');
+  var fallback = document.getElementById('fallback');
+  var box = document.getElementById('msgbox');
+  var ready = '';
+
+  function openPanel(e) {
+    e.preventDefault();
+    if (typeof dlg.showModal === 'function') dlg.showModal();
+    else dlg.setAttribute('open', '');
+    d.classList.add('sheet-open');
+  }
+  function closePanel() {
+    if (typeof dlg.close === 'function') dlg.close();
+    else { dlg.removeAttribute('open'); d.classList.remove('sheet-open'); }
+  }
+  [].forEach.call(document.querySelectorAll('[data-book]'), function (el) {
+    el.addEventListener('click', openPanel);
+  });
+  document.getElementById('book-close').addEventListener('click', closePanel);
+  dlg.addEventListener('close', function () { d.classList.remove('sheet-open'); });
+  dlg.addEventListener('click', function (e) {
+    if (e.target !== dlg) return;
+    var r = dlg.getBoundingClientRect();
+    if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) closePanel();
+  });
+
+  function pick(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+  function compose() {
+    var subject = pick('subject'), format = pick('format'), size = pick('size');
+    var day = pick('day'), time = pick('time');
+    var missing = [];
+    if (!subject) missing.push(['f-subject', 'Pick a subject first.']);
+    if (!format) missing.push(['f-format', 'Choose solo or group.']);
+    else if (format === 'group' && !size) missing.push(['f-format', 'How many of you? Pick a group size.']);
+    if (!day || !time) missing.push(['f-when', 'Pick a day and a time.']);
+    var who = format === 'group' ? 'Group of ' + size : 'Solo (one-on-one)';
+    return {
+      missing: missing,
+      short: [subject, format === 'group' ? (size ? 'Group of ' + size : 'Group') : (format ? 'Solo' : ''),
+              [day.slice(0, 3), time].join(' ').trim()].filter(Boolean).join(' · '),
+      text: 'Hi Kuya Rey! I’d like to book a tutorial session.\n' +
+            'Subject: ' + subject + '\n' +
+            'Format: ' + who + '\n' +
+            'Preferred day and time: ' + day + ' ' + time
+    };
+  }
+
+  form.addEventListener('change', function (e) {
+    if (e.target.name === 'format') {
+      var group = e.target.value === 'group';
+      sizeRow.hidden = !group;
+      if (!group) [].forEach.call(form.querySelectorAll('input[name="size"]'), function (i) { i.checked = false; });
+    }
+    var m = compose();
+    summary.textContent = m.short || 'Pick all three, then book.';
+    summary.classList.toggle('ready', !m.missing.length);
+    [].forEach.call(form.querySelectorAll('fieldset.need'), function (f) {
+      if (!m.missing.some(function (x) { return x[0] === f.id; })) f.classList.remove('need');
+    });
+    status.textContent = '';
+    fallback.hidden = true;
+    ready = '';
+    var here = e.target.closest('fieldset');
+    if (m.missing.length && !m.missing.some(function (x) { return x[0] === here.id; })) {
+      document.getElementById(m.missing[0][0]).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  });
+
+  function copyNow(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';
+    dlg.appendChild(ta);
+    ta.focus({ preventScroll: true });
+    ta.select();
+    ta.setSelectionRange(0, text.length);
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) {}
+    dlg.removeChild(ta);
+    send.focus({ preventScroll: true });
+    return ok;
+  }
+  function showBox(text) {
+    box.value = text;
+    fallback.hidden = false;
+    status.textContent = 'Copying didn’t work. Copy the message below, then tap Book on Messenger.';
+    box.focus();
+    box.select();
+  }
+  box.addEventListener('focus', function () { box.select(); });
+
+  send.addEventListener('click', function (e) {
+    var m = compose();
+    if (m.missing.length) {
+      e.preventDefault();
+      m.missing.forEach(function (x) { document.getElementById(x[0]).classList.add('need'); });
+      status.textContent = m.missing[0][1];
+      document.getElementById(m.missing[0][0]).scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      return;
+    }
+    if (ready === m.text) return;            /* already copied or shown: just open Messenger */
+    if (copyNow(m.text)) {
+      status.textContent = 'Message copied — paste it in the chat';
+      return;                                 /* the link opens Messenger */
+    }
+    e.preventDefault();
+    ready = m.text;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(m.text).then(function () {
+        status.textContent = 'Message copied — paste it in the chat';
+        var w = window.open(LINK, '_blank');
+        if (w) w.opener = null;
+        else status.textContent = 'Message copied — paste it in the chat. Tap Book on Messenger to open the chat.';
+      }, function () { showBox(m.text); });
+    } else {
+      showBox(m.text);
+    }
+  });
+})();
+</script>
+</body>
+</html>
