@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kuya Rey · Math tutorials at CMU · ₱120/hr</title>
-<meta name="description" content="Affordable student tutorial service for the price of a meal and a coffee. MMW, Calculus 1 and 2, Integration, Linear Algebra, Abstract Algebra, Statistics. ₱120/hr, face to face at CMU. Book on Messenger.">
+<title>Kuya Rey · Math tutor at CMU · ₱149/hr</title>
+<meta name="description" content="Affordable student tutorial service for the price of a meal and a coffee. Finals review in MMW, Calculus, Linear Algebra, Abstract Algebra, Statistics, Discrete Math, Number Theory, Graph Theory, and Differential Equations. ₱149/hr. Book on Messenger.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://official-rey.github.io/reyteachesmath/">
-<meta property="og:title" content="Midterms na? Kaya ra. · Kuya Rey, math tutorials at CMU">
-<meta property="og:description" content="Affordable student tutorial service for the price of a meal and a coffee. ₱120/hr. Book on Messenger.">
+<meta property="og:title" content="Need a math tutor? · Kuya Rey, CMU">
+<meta property="og:description" content="Affordable student tutorial service for the price of a meal and a coffee. ₱149/hr. Book on Messenger.">
 <meta name="theme-color" content="#F3EFE6" id="theme">
 <meta name="color-scheme" content="only light">
 <link rel="icon" href="data:,">
@@ -16,14 +16,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Instrument+Serif:ital@0;1&display=swap">
 <script>
-/* Decide before first paint whether the intro plays: once per visit, never under reduced motion. */
+/* Decide before first paint whether the intro plays (once per visit) and whether scroll motion runs; reduced motion turns both off. */
 (function (d) {
   var play = true;
   try {
     if (sessionStorage.getItem('kr-intro')) play = false;
     else sessionStorage.setItem('kr-intro', '1');
   } catch (e) {}
-  try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) play = false; } catch (e) {}
+  var still = false;
+  try { still = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  if (!still && 'IntersectionObserver' in window) d.classList.add('motion');
+  if (still) play = false;
   if (!play) return;
   d.classList.add('opening');
   var theme = document.getElementById('theme');
@@ -152,7 +155,8 @@ html.opening-skip .page { animation: page-in .35s ease-in-out both; }
   font: 400 clamp(56px, 19vw, 156px)/.9 var(--serif);
   letter-spacing: -.012em;
 }
-.headline em { display: block; font-style: italic; color: var(--accent); }
+.headline .ln { display: block; }
+.headline em { font-style: italic; color: var(--accent); }
 .plot { width: 212px; height: auto; margin: 22px 0 24px; overflow: visible; }
 .plot .axis { stroke: var(--hair); stroke-width: 1; }
 .plot .curve { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linecap: round; }
@@ -184,7 +188,8 @@ html.opening-skip .page { animation: page-in .35s ease-in-out both; }
 .btn .soft { font-weight: 400; opacity: .82; }
 
 /* Sections */
-.sec { padding: 52px 0 60px; border-top: 1px solid var(--hair); }
+.sec { position: relative; padding: 52px 0 60px; }
+.sec::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--hair); transform-origin: left; }
 .label {
   display: flex;
   align-items: center;
@@ -351,6 +356,92 @@ html.sheet-open { overflow: hidden; }
   resize: vertical;
 }
 
+/* Photos: a loose collage of prints */
+.page { overflow-x: clip; }
+.collage { --H: 178; position: relative; aspect-ratio: 100 / var(--H); margin: 34px 0 10px; }
+.tile {
+  --rot: calc(var(--r) * 1deg);
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 100% / var(--H));
+  width: calc(var(--w) * 1%);
+  margin: 0;
+  padding: 4px;
+  background: #FBF9F4;
+  box-shadow: 0 1px 2px rgba(29, 28, 26, .1), 0 12px 26px -8px rgba(29, 28, 26, .28);
+  transform: rotate(var(--rot));
+}
+.tile img { display: block; width: 100%; height: auto; filter: saturate(.78) sepia(.06); transition: filter .35s ease-in-out; }
+.tile.wide { display: none; }
+
+/* Message board and tips */
+.posts { margin: 26px 0 8px; border-top: 1px solid var(--hair); }
+.posts:empty { display: none; }
+.post { margin: 0; padding: 18px 0; border-bottom: 1px solid var(--hair); }
+.post blockquote { margin: 0; font: 400 23px/1.25 var(--serif); overflow-wrap: anywhere; }
+.post figcaption { margin-top: 6px; font-size: 14px; color: var(--muted); }
+.board-form { margin-top: 28px; }
+.field { display: block; margin: 16px 0 6px; font-size: 15px; font-weight: 600; }
+.field span { font-weight: 400; color: var(--muted); }
+.board-form input, .board-form textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+  background: #FBF9F4;
+  color: var(--ink);
+  font: 400 16px/1.45 var(--sans);
+}
+.board-form textarea { resize: vertical; }
+.board-form .btn { margin-top: 16px; }
+.trap { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.gcash { margin-top: 22px; }
+.gcash p { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 14px; margin-bottom: 16px; }
+.gcash-label { font: 600 12px/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.gcash-num { font: 400 40px/1.1 var(--serif); letter-spacing: .01em; }
+.gcash-name { flex-basis: 100%; font-size: 15px; color: var(--muted); }
+.btn.line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.btn.line:hover { background: rgba(29, 28, 26, .05); }
+
+/* Motion: hero entrance, scroll reveals, and rules that draw in. Only runs with JS and without reduced motion. */
+html.motion .hero .kicker, html.motion .headline .ln, html.motion .hero .tagline,
+html.motion .hero .price, html.motion .hero .price-note, html.motion #hero-cta {
+  opacity: 0;
+  transform: translateY(16px);
+}
+html.motion .plot .curve { stroke-dasharray: 340; stroke-dashoffset: 340; }
+html.hero-go .hero .kicker, html.hero-go .headline .ln, html.hero-go .hero .tagline,
+html.hero-go .hero .price, html.hero-go .hero .price-note, html.hero-go #hero-cta {
+  opacity: 1;
+  transform: none;
+  transition: opacity .9s ease-in-out var(--d, 0s), transform .9s ease-in-out var(--d, 0s);
+}
+html.hero-go .plot .curve { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s ease-in-out .55s; }
+html.motion :is(.sec .label, .sec h2, .lede, .sec .note, .stats > div, .quote, .rule-list > li, .formats > div, .creds h3, .faq dt, .faq dd, .steps + .btn, .board-form, .gcash) {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .8s ease-in-out var(--sd, 0s), transform .8s ease-in-out var(--sd, 0s);
+}
+html.motion :is(.sec .label, .sec h2, .lede, .sec .note, .stats > div, .quote, .rule-list > li, .formats > div, .creds h3, .faq dt, .faq dd, .steps + .btn, .board-form, .gcash).in {
+  opacity: 1;
+  transform: none;
+}
+html.motion .sec::before { transform: scaleX(0); transition: transform 1.4s ease-in-out; }
+html.motion .sec.in::before { transform: none; }
+html.motion .tile {
+  opacity: 0;
+  transform: translateY(32px) rotate(calc(var(--rot) * 3));
+  transition: opacity 1s ease-in-out var(--sd, 0s), transform 1.2s cubic-bezier(.3, .7, .2, 1) var(--sd, 0s);
+}
+html.motion .tile.in { opacity: 1; transform: rotate(var(--rot)); }
+html .collage .tile.done { transition: transform .35s ease-in-out, box-shadow .35s ease-in-out; }
+@media (hover: hover) {
+  html .collage .tile:hover { z-index: 5; transform: rotate(0deg) scale(1.06); box-shadow: 0 2px 4px rgba(29, 28, 26, .12), 0 22px 40px -10px rgba(29, 28, 26, .35); }
+  .tile:hover img { filter: none; }
+}
+
 @media (min-width: 640px) {
   .sheet { --g: 28px; margin: auto; border-radius: 6px; max-height: min(92vh, 860px); }
   .btn.fit { width: auto; min-width: 280px; }
@@ -385,6 +476,12 @@ html.sheet-open { overflow: hidden; }
   .foot .wrap > * { grid-column: 2; }
   .intro-body { left: max(var(--g), calc((100vw - 1120px) / 2 + var(--g))); }
   .intro-curve path { stroke-width: 1.1; }
+  .collage { --H: 57; grid-column: 1 / -1; margin: 52px 0 30px; }
+  .tile { --rot: calc(var(--dr) * 1deg); left: calc(var(--dx) * 1%); top: calc(var(--dy) * 100% / var(--H)); width: calc(var(--dw) * 1%); padding: 5px; }
+  .tile.wide { display: block; }
+  .board-form .btn, .gcash .btn { width: auto; min-width: 220px; }
+  .post blockquote { font-size: 28px; }
+  .gcash-num { font-size: 52px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -407,16 +504,16 @@ html.sheet-open { overflow: hidden; }
 
 <header class="hero">
   <div class="wrap">
-    <p class="kicker">Kuya Rey · Math tutorials at CMU</p>
-    <h1 class="headline">Midterms na? <em>Kaya ra.</em></h1>
+    <p class="kicker" style="--d:0s">Kuya Rey · Finals review · CMU</p>
+    <h1 class="headline"><span class="ln" style="--d:.12s">Need a</span> <em class="ln" style="--d:.28s">math tutor?</em></h1>
     <svg class="plot" viewBox="0 0 320 34" aria-hidden="true">
       <path class="axis" d="M0 17H320M40 13v8M80 13v8M120 13v8M160 13v8M200 13v8M240 13v8M280 13v8"/>
       <path class="curve" d="M0 17C13.3 12 26.7 7 40 7C53.3 7 66.7 12 80 17C93.3 22 106.7 27 120 27C133.3 27 146.7 22 160 17C173.3 12 186.7 7 200 7C213.3 7 226.7 12 240 17C253.3 22 266.7 27 280 27C293.3 27 306.7 22 320 17"/>
     </svg>
-    <p class="tagline">Affordable student tutorial service for the price of a meal and a coffee.</p>
-    <p class="price"><span class="peso">₱</span>120<span class="per">/hr</span></p>
-    <p class="price-note">Solo or group · face to face</p>
-    <a class="btn" id="hero-cta" href="https://m.me/reyblunder.31415" data-book>Book a session</a>
+    <p class="tagline" style="--d:.6s">Affordable student tutorial service for the price of a meal and a coffee.</p>
+    <p class="price" style="--d:.72s"><span class="peso">₱</span>149<span class="per">/hr</span></p>
+    <p class="price-note" style="--d:.82s">Solo or group · face to face</p>
+    <a class="btn" id="hero-cta" style="--d:.92s" href="https://m.me/reyblunder.31415" data-book>Book a session</a>
   </div>
 </header>
 
@@ -424,12 +521,12 @@ html.sheet-open { overflow: hidden; }
 
 <section class="sec" aria-labelledby="h-reviews">
   <div class="wrap">
-    <p class="label"><span class="no">01</span> Reviews</p>
-    <h2 id="h-reviews">What students <em>say</em></h2>
+    <p class="label"><span class="no">01</span></p>
+    <h2 id="h-reviews">Reviews</h2>
     <dl class="stats">
-      <div><dt>Would recommend</dt><dd>4.8 <small>/ 5</small></dd></div>
-      <div><dt>Clarity</dt><dd>4.6 <small>/ 5</small></dd></div>
-      <div><dt>Comfortable asking questions</dt><dd>4.6 <small>/ 5</small></dd></div>
+      <div><dt>Would recommend</dt><dd><span class="num" data-v="4.8">4.8</span> <small>/ 5</small></dd></div>
+      <div><dt>Clarity</dt><dd><span class="num" data-v="4.6">4.6</span> <small>/ 5</small></dd></div>
+      <div><dt>Comfortable asking questions</dt><dd><span class="num" data-v="4.6">4.6</span> <small>/ 5</small></dd></div>
     </dl>
     <p class="note">Averages from an anonymous feedback form · 5 student responses</p>
     <div class="quotes">
@@ -455,8 +552,8 @@ html.sheet-open { overflow: hidden; }
 
 <section class="sec" aria-labelledby="h-subjects">
   <div class="wrap">
-    <p class="label"><span class="no">02</span> Subjects <svg viewBox="0 0 16 32" aria-hidden="true"><path d="M12.5 3.5C10 2 7.6 3 7.4 6.6L6.6 25.4C6.4 29 4 30 1.5 28.5"/></svg></p>
-    <h2 id="h-subjects">What we can <em>review</em></h2>
+    <p class="label"><span class="no">02</span> <svg viewBox="0 0 16 32" aria-hidden="true"><path d="M12.5 3.5C10 2 7.6 3 7.4 6.6L6.6 25.4C6.4 29 4 30 1.5 28.5"/></svg></p>
+    <h2 id="h-subjects">Subjects</h2>
     <ul class="rule-list subjects">
       <li><span class="name">MMW</span> <span class="full">Mathematics in the Modern World</span></li>
       <li><span class="name">Calculus 1</span></li>
@@ -485,8 +582,8 @@ html.sheet-open { overflow: hidden; }
 
 <section class="sec" aria-labelledby="h-includes">
   <div class="wrap">
-    <p class="label"><span class="no">03</span> Included <svg viewBox="0 0 22 26" aria-hidden="true"><path d="M19 3.5H3.5L12 13L3.5 22.5H19"/></svg></p>
-    <h2 id="h-includes">Every session <em>includes</em></h2>
+    <p class="label"><span class="no">03</span> <svg viewBox="0 0 22 26" aria-hidden="true"><path d="M19 3.5H3.5L12 13L3.5 22.5H19"/></svg></p>
+    <h2 id="h-includes">Every session includes</h2>
     <ul class="rule-list includes">
       <li>Curated review materials</li>
       <li>Practice exercises</li>
@@ -500,8 +597,8 @@ html.sheet-open { overflow: hidden; }
 
 <section class="sec" aria-labelledby="h-booking">
   <div class="wrap">
-    <p class="label"><span class="no">04</span> Booking</p>
-    <h2 id="h-booking">How to <em>book</em></h2>
+    <p class="label"><span class="no">04</span></p>
+    <h2 id="h-booking">How to book</h2>
     <ol class="rule-list steps">
       <li><p>Choose a subject, solo or group, and a day and time.</p></li>
       <li><p>Tap “Book on Messenger.” The page copies your message.</p></li>
@@ -513,9 +610,23 @@ html.sheet-open { overflow: hidden; }
 
 <section class="sec" aria-labelledby="h-about">
   <div class="wrap">
-    <p class="label"><span class="no">05</span> About</p>
-    <h2 id="h-about">Hi, I’m <em>Kuya Rey.</em></h2>
-    <p class="lede">Rey Saliot on Messenger. 4th-year BS Mathematics student at Central Mindanao University, Musuan.</p>
+    <p class="label"><span class="no">05</span></p>
+    <h2 id="h-about">About</h2>
+    <p class="lede">Rey Saliot. 4th-year BS Mathematics student at Central Mindanao University, Musuan.</p>
+    <div class="collage" aria-label="Photos">
+      <figure class="tile" style="--x:1;--y:2;--w:63;--r:-2;--dx:0;--dy:3;--dw:24;--dr:-2"><img src="img/awards-360.webp" srcset="img/awards-360.webp 360w, img/awards-720.webp 720w" sizes="(min-width: 880px) 242px, 63vw" width="1080" height="720" alt="Students holding trophies at an awarding ceremony" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:61;--y:0;--w:36;--r:3;--dx:22;--dy:0;--dw:13;--dr:3"><img src="img/certificate-360.webp" srcset="img/certificate-360.webp 360w, img/certificate-720.webp 720w" sizes="(min-width: 880px) 131px, 36vw" width="952" height="1269" alt="Holding a certificate and flowers outside a campus building" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:1;--y:88;--w:68;--r:-1.5;--dx:35;--dy:2;--dw:28;--dr:-1"><img src="img/mathinabangay-group-360.webp" srcset="img/mathinabangay-group-360.webp 360w, img/mathinabangay-group-720.webp 720w" sizes="(min-width: 880px) 283px, 68vw" width="1280" height="853" alt="Group photo after a Mathinabangay session" loading="lazy" decoding="async"></figure>
+  <figure class="tile wide" style="--x:0;--y:0;--w:0;--r:0;--dx:64;--dy:4;--dw:20;--dr:2"><img src="img/cads-360.webp" srcset="img/cads-360.webp 360w, img/cads-720.webp 720w" sizes="(min-width: 880px) 202px, 40vw" width="1269" height="952" alt="Holding certificates with the CADS team" loading="lazy" decoding="async"></figure>
+  <figure class="tile wide" style="--x:0;--y:0;--w:0;--r:0;--dx:85;--dy:0;--dw:13;--dr:-3"><img src="img/chess-club-360.webp" srcset="img/chess-club-360.webp 360w, img/chess-club-720.webp 720w" sizes="(min-width: 880px) 131px, 40vw" width="952" height="1269" alt="Holding the CMU Chess Club banner" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:3;--y:50;--w:56;--r:1.5;--dx:2;--dy:22;--dw:22;--dr:1.5"><img src="img/chess-match-360.webp" srcset="img/chess-match-360.webp 360w, img/chess-match-720.webp 720w" sizes="(min-width: 880px) 222px, 56vw" width="1346" height="896" alt="A chess match" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:6;--y:132;--w:32;--r:-3;--dx:23;--dy:19;--dw:12;--dr:-3"><img src="img/cnsm-360.webp" srcset="img/cnsm-360.webp 360w, img/cnsm-720.webp 720w" sizes="(min-width: 880px) 121px, 32vw" width="819" height="1092" alt="Selfie with friends holding a CNSM 1st winner sign" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:40;--y:140;--w:56;--r:1.5;--dx:36;--dy:23;--dw:24;--dr:2"><img src="img/assembly-talk-360.webp" srcset="img/assembly-talk-360.webp 360w, img/assembly-talk-720.webp 720w" sizes="(min-width: 880px) 242px, 56vw" width="1344" height="896" alt="Speaking at the CMU Mathematics Society general assembly" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:63;--y:96;--w:34;--r:2.5;--dx:59;--dy:18;--dw:13;--dr:-2"><img src="img/certificates-360.webp" srcset="img/certificates-360.webp 360w, img/certificates-720.webp 720w" sizes="(min-width: 880px) 131px, 34vw" width="952" height="1269" alt="Three students holding certificates and flowers" loading="lazy" decoding="async"></figure>
+  <figure class="tile" style="--x:57;--y:52;--w:40;--r:-3;--dx:73;--dy:22;--dw:18;--dr:2.5"><img src="img/medals-360.webp" srcset="img/medals-360.webp 360w, img/medals-720.webp 720w" sizes="(min-width: 880px) 182px, 40vw" width="1024" height="768" alt="Champion medals" loading="lazy" decoding="async"></figure>
+  <figure class="tile wide" style="--x:0;--y:0;--w:0;--r:0;--dx:13;--dy:38;--dw:27;--dr:-1.5"><img src="img/mathinabangay-room-360.webp" srcset="img/mathinabangay-room-360.webp 360w, img/mathinabangay-room-720.webp 720w" sizes="(min-width: 880px) 273px, 40vw" width="1280" height="854" alt="A Mathinabangay review session in a lecture room" loading="lazy" decoding="async"></figure>
+  <figure class="tile wide" style="--x:0;--y:0;--w:0;--r:0;--dx:50;--dy:39;--dw:27;--dr:1"><img src="img/mathcount-360.webp" srcset="img/mathcount-360.webp 360w, img/mathcount-720.webp 720w" sizes="(min-width: 880px) 273px, 40vw" width="1080" height="720" alt="MathCount team photo in Quezon City" loading="lazy" decoding="async"></figure>
+    </div>
     <div class="creds">
       <h3>Honors</h3>
       <ul class="rule-list">
@@ -540,16 +651,46 @@ html.sheet-open { overflow: hidden; }
 
 <section class="sec" aria-labelledby="h-faq">
   <div class="wrap">
-    <p class="label"><span class="no">06</span> FAQ</p>
-    <h2 id="h-faq">Quick <em>questions</em></h2>
+    <p class="label"><span class="no">06</span></p>
+    <h2 id="h-faq">FAQ</h2>
     <dl class="faq">
       <dt>Where do we meet?</dt>
       <dd>Anywhere you suggest: a cafe, a study area, a campus classroom, or your own place. Sessions at your place add a transport fee.</dd>
       <dt>What’s the group rate?</dt>
-      <dd>Group rate: message me. Solo is ₱120/hr.</dd>
+      <dd>Group rate: message me. Solo is ₱149/hr.</dd>
       <dt>What should I prepare?</dt>
       <dd>Your syllabus, the materials your instructor gave, your references, and past quizzes or exams.</dd>
     </dl>
+  </div>
+</section>
+
+<section class="sec" id="board" aria-labelledby="h-board" hidden>
+  <div class="wrap">
+    <p class="label"><span class="no">07</span></p>
+    <h2 id="h-board">Message board</h2>
+    <p class="note">Messages show here after I read them.</p>
+    <div class="posts" id="posts"></div>
+    <form class="board-form" id="board-form" novalidate>
+      <label for="b-name" class="field">Name <span>(optional)</span></label>
+      <input id="b-name" name="name" maxlength="40" autocomplete="nickname">
+      <label for="b-msg" class="field">Message</label>
+      <textarea id="b-msg" name="message" maxlength="300" rows="4"></textarea>
+      <input class="trap" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn" type="submit" id="b-send">Post</button>
+      <p class="status" id="b-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<section class="sec" id="coffee" aria-labelledby="h-coffee" hidden>
+  <div class="wrap">
+    <p class="label"><span class="no">08</span></p>
+    <h2 id="h-coffee">Buy me a coffee</h2>
+    <p class="note">Tips go through GCash. Thank you.</p>
+    <div class="gcash">
+      <p><span class="gcash-label">GCash</span><span class="gcash-num" id="gcash-num"></span><span class="gcash-name" id="gcash-name"></span></p>
+      <button class="btn line" type="button" id="gcash-copy">Copy number</button>
+    </div>
   </div>
 </section>
 
@@ -566,7 +707,7 @@ html.sheet-open { overflow: hidden; }
 
 <div class="dock" id="dock">
   <div class="wrap">
-    <a class="btn" href="https://m.me/reyblunder.31415" data-book>Book a session <span class="soft">· <span class="peso">₱</span>120/hr</span></a>
+    <a class="btn" href="https://m.me/reyblunder.31415" data-book>Book a session <span class="soft">· <span class="peso">₱</span>149/hr</span></a>
   </div>
 </div>
 
@@ -644,6 +785,60 @@ html.sheet-open { overflow: hidden; }
 (function () {
   var d = document.documentElement;
   var LINK = 'https://m.me/reyblunder.31415';
+
+  /* Switch-ons. An empty value keeps that section hidden.
+     GCASH: the number and account name shown under "Buy me a coffee".
+     BOARD: the Google Form's formResponse URL, its two entry IDs, and the published CSV of approved messages. */
+  var GCASH = { number: '', name: '' };
+  var BOARD = { form: '', nameField: '', messageField: '', feed: '' };
+
+  /* Motion: hero entrance, scroll reveals, photo prints settling, and the review numbers counting up. */
+  function heroGo() { d.classList.add('hero-go'); }
+  try {
+    if (d.classList.contains('motion')) {
+      var picks = '.sec, .sec .label, .sec h2, .lede, .sec .note, .stats > div, .quote, .rule-list > li, .formats > div, ' +
+                  '.creds h3, .faq dt, .faq dd, .steps + .btn, .board-form, .gcash, .tile';
+      var seen = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          seen.unobserve(e.target);
+          e.target.classList.add('in');
+          if (e.target.matches('.stats > div')) countUp(e.target.querySelector('.num'));
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+      var watch = function (el) {
+        var sibs = el.parentNode.children, i = [].indexOf.call(sibs, el);
+        if (el.matches('.rule-list > li, .stats > div, .quote, .formats > div')) el.style.setProperty('--sd', Math.min(i, 6) * 0.07 + 's');
+        if (el.matches('.tile')) {
+          el.style.setProperty('--sd', i * 0.09 + 's');
+          el.addEventListener('transitionend', function (ev) { if (ev.propertyName === 'transform') el.classList.add('done'); });
+        }
+        seen.observe(el);
+      };
+      [].forEach.call(document.querySelectorAll(picks), watch);
+      if (d.classList.contains('opening')) {
+        document.getElementById('intro').addEventListener('animationstart', function (e) {
+          if (e.target.id === 'intro') heroGo();
+        });
+        setTimeout(heroGo, 6000);
+      } else {
+        requestAnimationFrame(function () { requestAnimationFrame(heroGo); });
+      }
+    }
+  } catch (err) {
+    d.classList.remove('motion');
+  }
+  function countUp(el) {
+    if (!el) return;
+    var v = parseFloat(el.getAttribute('data-v')), t0 = null;
+    function step(t) {
+      if (t0 === null) t0 = t;
+      var k = Math.min((t - t0) / 1100, 1);
+      el.textContent = (v * (1 - Math.pow(1 - k, 3))).toFixed(1);
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
 
   /* Intro: tap anywhere, Skip, or Escape ends it early. */
   var intro = document.getElementById('intro');
@@ -746,19 +941,19 @@ html.sheet-open { overflow: hidden; }
     }
   });
 
-  function copyNow(text) {
+  function copyNow(text, host, back) {
     var ta = document.createElement('textarea');
     ta.value = text;
     ta.setAttribute('readonly', '');
     ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;font-size:16px';
-    dlg.appendChild(ta);
+    host.appendChild(ta);
     ta.focus({ preventScroll: true });
     ta.select();
     ta.setSelectionRange(0, text.length);
     var ok = false;
     try { ok = document.execCommand('copy'); } catch (err) {}
-    dlg.removeChild(ta);
-    send.focus({ preventScroll: true });
+    host.removeChild(ta);
+    back.focus({ preventScroll: true });
     return ok;
   }
   function showBox(text) {
@@ -780,7 +975,7 @@ html.sheet-open { overflow: hidden; }
       return;
     }
     if (ready === m.text) return;            /* already copied or shown: just open Messenger */
-    if (copyNow(m.text)) {
+    if (copyNow(m.text, dlg, send)) {
       status.textContent = 'Message copied — paste it in the chat';
       return;                                 /* the link opens Messenger */
     }
@@ -796,6 +991,84 @@ html.sheet-open { overflow: hidden; }
     } else {
       showBox(m.text);
     }
+  });
+
+  /* Buy me a coffee */
+  if (GCASH.number) {
+    document.getElementById('coffee').hidden = false;
+    document.getElementById('gcash-num').textContent = GCASH.number;
+    document.getElementById('gcash-name').textContent = GCASH.name;
+    var copyBtn = document.getElementById('gcash-copy');
+    copyBtn.addEventListener('click', function () {
+      var plain = GCASH.number.replace(/\s+/g, '');
+      var done = function () { copyBtn.textContent = 'Number copied'; };
+      if (copyNow(plain, document.body, copyBtn)) done();
+      else if (navigator.clipboard) navigator.clipboard.writeText(plain).then(done, function () {});
+    });
+  }
+
+  /* Message board: posts go to a Google Form; only rows marked as approved in the sheet come back in the feed. */
+  if (BOARD.form && BOARD.messageField) {
+    document.getElementById('board').hidden = false;
+    var bForm = document.getElementById('board-form');
+    var bStatus = document.getElementById('b-status');
+    var bSend = document.getElementById('b-send');
+    var posts = document.getElementById('posts');
+    bForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = bForm.elements.name.value.trim();
+      var msg = bForm.elements.message.value.trim();
+      if (!msg) { bStatus.textContent = 'Write a message first.'; return; }
+      if (bForm.elements.website.value) { bForm.reset(); bStatus.textContent = 'Sent. It shows here after I read it.'; return; }
+      var body = new URLSearchParams();
+      body.append(BOARD.messageField, msg);
+      if (BOARD.nameField) body.append(BOARD.nameField, name);
+      bSend.disabled = true;
+      bStatus.textContent = 'Sending…';
+      fetch(BOARD.form, { method: 'POST', mode: 'no-cors', body: body }).then(function () {
+        bForm.reset();
+        bStatus.textContent = 'Sent. It shows here after I read it.';
+        setTimeout(function () { bSend.disabled = false; }, 30000);
+      }, function () {
+        bSend.disabled = false;
+        bStatus.textContent = 'Couldn’t send. Check your connection and try again.';
+      });
+    });
+    if (BOARD.feed) {
+      fetch(BOARD.feed, { cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : ''; }).then(function (csv) {
+        parseCSV(csv).slice(1).filter(function (row) { return row[1] && row[1].trim(); }).slice(0, 40).forEach(function (row) {
+          var fig = document.createElement('figure');
+          fig.className = 'post';
+          var q = document.createElement('blockquote');
+          q.textContent = row[1].trim();
+          var cap = document.createElement('figcaption');
+          cap.textContent = '— ' + ((row[0] || '').trim() || 'Anonymous');
+          fig.appendChild(q);
+          fig.appendChild(cap);
+          posts.appendChild(fig);
+        });
+      }, function () {});
+    }
+  }
+  function parseCSV(t) {
+    var rows = [], row = [], f = '', q = false;
+    for (var i = 0; i < t.length; i++) {
+      var c = t[i];
+      if (q) {
+        if (c === '"') { if (t[i + 1] === '"') { f += '"'; i++; } else q = false; }
+        else f += c;
+      } else if (c === '"') q = true;
+      else if (c === ',') { row.push(f); f = ''; }
+      else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; }
+      else if (c !== '\r') f += c;
+    }
+    if (f || row.length) { row.push(f); rows.push(row); }
+    return rows;
+  }
+
+  /* Number the visible sections in order, since the board and tips may be hidden. */
+  [].forEach.call(document.querySelectorAll('main .sec:not([hidden]) .label .no'), function (el, i) {
+    el.textContent = (i < 9 ? '0' : '') + (i + 1);
   });
 })();
 </script>
